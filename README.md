@@ -1,6 +1,13 @@
 # Litex-install-Ubuntu-25.10-and-Vivado-2018.2
 Installation instructions to install Litex SOC builder on Ubuntu 25.10 and Vivado 2018.2
 
+Useful links     
+https://www.controlpaths.com/2022/01/17/building-soc-litex/   
+https://github.com/enjoy-digital/litex/tree/master  
+https://github.com/enjoy-digital/litex/tree/master/litex/soc/software/demo   
+https://github.com/trabucayre/openFPGALoader   
+https://trabucayre.github.io/openFPGALoader/guide/install.html   
+
 ## Versions
 
 - VirtualBox 7.1.6    
