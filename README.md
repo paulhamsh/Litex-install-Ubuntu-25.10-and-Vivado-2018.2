@@ -3,18 +3,18 @@ Installation instructions to install Litex SOC builder on Ubuntu 25.10 and Vivad
 
 ## Versions
 
-VirtualBox 7.1.6    
-Ubuntu 25.10    
-Vivado 2018.2    
+- VirtualBox 7.1.6    
+- Ubuntu 25.10    
+- Vivado 2018.2    
 
 ## VirtualBox install
 Install VirtualBox 7.1.6    
 Create new VM – “Vivado 2018.2”    
 Settings:    
-   Ubuntu 64 bit    
-   6 CPU    
-   8GB RAM    
-   60GB storage    
+Ubuntu 64 bit    
+- 6 CPU    
+- 8GB RAM    
+- 60GB storage    
 For this keyboard set AltGr or RIGHT ALT as home key    
 In Settings / General / Advanced set bi-directional clipboard    
 
