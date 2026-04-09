@@ -3,54 +3,54 @@ Installation instructions to install Litex SOC builder on Ubuntu 25.10 and Vivad
 
 ## Versions
 
-VirtualBox 7.1.6
-Ubuntu 25.10
-Vivado 2018.2
+VirtualBox 7.1.6    
+Ubuntu 25.10    
+Vivado 2018.2    
 
 ## VirtualBox install
-Install VirtualBox 7.1.6
-Create new VM – “Vivado 2018.2”
-Settings:
-   Ubuntu 64 bit
-   6 CPU
-   8GB RAM
-   60GB storage
-For this keyboard set AltGr or RIGHT ALT as home key
-In Settings / General / Advanced set bi-directional clipboard
+Install VirtualBox 7.1.6    
+Create new VM – “Vivado 2018.2”    
+Settings:    
+   Ubuntu 64 bit    
+   6 CPU    
+   8GB RAM    
+   60GB storage    
+For this keyboard set AltGr or RIGHT ALT as home key    
+In Settings / General / Advanced set bi-directional clipboard    
 
 ## Ubuntu install
-Download Ubuntu image ubuntu-25.10-desktop-amd64
+Download Ubuntu image ubuntu-25.10-desktop-amd64    
 
-Menu option Storage, Controlled: IDE add ISO image for Ubuntu.
+Menu option Storage, Controlled: IDE add ISO image for Ubuntu.    
 
-Start the VM
-Continue the Ubuntu install process
-Set up a user
-Log in
+Start the VM    
+Continue the Ubuntu install process    
+Set up a user    
+Log in    
 
-## VirtualBox guest additions
-In Devices menu option
-Insert Guest Additions CD image...
+## VirtualBox guest additions    
+In Devices menu option    
+Insert Guest Additions CD image...    
 
 ```
   cd /media/paul/VBox_GAs_7.1.6
   ./VBoxLinuxAdditions.run.
 ```
 
-Set shared folders in d:\VirtualBoxShare mounted to /mnt/VirtBoxShare
+Set shared folders in d:\VirtualBoxShare mounted to /mnt/VirtBoxShare    
 
 ## Vivado 2018.2 install    
-Download 2018.2 from AMD website – Vivado Design Suite – HLx Editions – 2018.2 Full Product Installation
-Xilinx_Vivado_SDK_2018.2_0614_1954.tar.gz (17.11 GB)
+Download 2018.2 from AMD website – Vivado Design Suite – HLx Editions – 2018.2 Full Product Installation    
+Xilinx_Vivado_SDK_2018.2_0614_1954.tar.gz (17.11 GB)    
 
-Copy the downloaded Xilinx install to /mnt/VirtBox/Installs
-Ensure we do a symbolic link for the two missing libraries
+Copy the downloaded Xilinx install to /mnt/VirtBox/Installs    
+Ensure we do a symbolic link for the two missing libraries    
 
 ```
   ln -s /usr/lib/x86_64-linux-gnu/libtinfo.so.6    /usr/lib/x86_64-linux-gnu/libtinfo.so.5
   ln -s /usr/lib/x86_64-linux-gnu/libncurses.so.6  /usr/lib/x86_64-linux-gnu/libcurses.so.5
 ```
-Then do the install
+Then do the install    
 
 ```
   cd /home/paul
@@ -63,9 +63,9 @@ Then do the install
   ./xsetup
 ```
 
-Use /opt/Xilinx as the install location
-Set options - only Artix 7 and Spartan 7
-SDK compiler toolsets - none
+Use /opt/Xilinx as the install location    
+Set options - only Artix 7 and Spartan 7    
+SDK compiler toolsets - none    
 
 ```
    cd /opt/Xilinx/Vivado/2018.2
@@ -105,17 +105,19 @@ SDK compiler toolsets - none
 ```
 
 ## USB Device
-(https://trabucayre.github.io/openFPGALoader/guide/install.html)
+(https://trabucayre.github.io/openFPGALoader/guide/install.html)    
 
 ```
    sudo vi /etc/udev/rules.d/99-ftdi.rules
 ```
-Entry for original FT232:
+
+Entry for original FT232: 
+
 ```
    ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", MODE="0666"
 ```
 
-or (not tested but openFPGALoader install instructions)
+or (not tested but openFPGALoader install instructions)    
 
 ```
    wget https://github.com/trabucayre/openFPGALoader/blob/master/99-openfpgaloader.rules
@@ -130,8 +132,9 @@ or (not tested but openFPGALoader install instructions)
 
 
 ## First build 
-(See https://trabucayre.github.io/openFPGALoader/guide/first-steps.html)
-For the Arty A7 board (a7-100)
+(See https://trabucayre.github.io/openFPGALoader/guide/first-steps.html)    
+For the Arty A7 board (a7-100)    
+
 ```
    source /opt/Xilinx/Vivado/2018.2/settings64.sh
 
@@ -153,7 +156,7 @@ For the Arty A7 board (a7-100)
 ```
 
 ## Full run for Nexys4 DDR
-Load up the Ubuntu VM and log in
+Load up the Ubuntu VM and log in    
 
 ```
    cd my_litex
@@ -175,9 +178,9 @@ Load up the Ubuntu VM and log in
 
 
 ## Generate the demo program
-Load the Ubuntu VM and log in
+Load the Ubuntu VM and log in    
 
-Create the SOC
+Create the SOC    
 
 ```
    cd my_litex
@@ -190,7 +193,7 @@ Create the SOC
    ./digilent_nexys4ddr.py --build –load
 ```
 
-Then the demo program
+Then the demo program    
 
 ```
    cd ~/my_litex/litex/litex/soc/software/demo/
