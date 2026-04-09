@@ -15,6 +15,7 @@ Ubuntu 64 bit
 - 6 CPU    
 - 8GB RAM    
 - 60GB storage    
+
 For this keyboard set AltGr or RIGHT ALT as home key    
 In Settings / General / Advanced set bi-directional clipboard    
 
