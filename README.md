@@ -11,7 +11,7 @@ Installation instructions to install Litex SOC builder on Ubuntu 25.10 and Vivad
 Install VirtualBox 7.1.6    
 Create new VM – “Vivado 2018.2”    
 Settings:    
-Ubuntu 64 bit    
+- Ubuntu 64 bit    
 - 6 CPU    
 - 8GB RAM    
 - 60GB storage    
