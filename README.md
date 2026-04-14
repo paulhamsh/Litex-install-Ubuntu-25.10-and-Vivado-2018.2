@@ -139,7 +139,7 @@ or (not tested but openFPGALoader install instructions)
 ```
 
 
-## First build 
+## First build and load
 (See https://trabucayre.github.io/openFPGALoader/guide/first-steps.html)    
 For the Arty A7 board (a7-100)    
 
@@ -150,8 +150,17 @@ For the Arty A7 board (a7-100)
    ./digilent_arty.py --variant a7-100 --build --load
 ```
 
+Could also be:   
 
-## Load
+```
+   source /opt/Xilinx/Vivado/2018.2/settings64.sh
+
+   python3 -m litex_boards.targets.digilent_arty –build --load
+```
+
+
+
+## Load   
 
 ```
    cd ~/my_litex/litex-boards/litex_boards/targets/build/digilent_arty/gateware
@@ -229,7 +238,149 @@ Alternatively using the ```demo.py``` script.
    litex_term /dev/ttyUSB1 --kernel  demo.bin
 ```
 
+## Replace the BIOS with the demo   
 
+```
+   cd my_litex
+   source venv/bin/activate
+
+   cd /opt/Xilinx/Vivado/2018.2
+   source settings64.sh
+
+   cd ~/my_litex/litex/litex/soc/software/demo
+
+   python3 demo.py --build-path=/home/paul/my_litex/litex-boards/litex_boards/targets/build/digilent_nexys4ddr/ --mem=rom
+
+   python3 -m litex_boards.targets.digilent_nexys4ddr --integrated-rom-init=demo.bin --build 
+
+   openFPGALoader -b nexys_a7_100 
+      ~/my_litex/litex-boards/litex_boards/targets/build/digilent_nexys4ddr/gateware/digilent_nexys4ddr.bit
+
+   litex_term /dev/ttyUSB1 
+```
+
+Or   
+```
+   cd my_litex
+   cd ~/my_litex/litex/litex/soc/software/demo
+
+   python3 demo.py 
+       --build-path=/home/paul/my_litex/litex-boards/litex_boards/targets/build/digilent_nexys4ddr/
+       --mem=rom
+
+   cd ~/my_litex/litex-boards/litex_boards/targets
+
+   ./digilent_nexys4ddr.py --build 
+      --integrated-rom-init=/home/paul/my_litex/litex/litex/soc/software/demo/demo.bin 
+
+   openFPGALoader -b nexys_a7_100 
+      ~/my_litex/litex-boards/litex_boards/targets/build/digilent_nexys4ddr/gateware/digilent_nexys4ddr.bit
+
+   litex_term /dev/ttyUSB1 
+```
+
+
+
+
+## Where the Vivado files are stored
+
+The Vivado files are here:   
+   ~/my_litex/litex-boards/litex_boards/targets/build/digilent_nexys4ddr/gateware   
+And the memory init files (rom) are:   
+   digilent_nexys4ddr_rom.init     
+   digilent_arty_rom.init   
+
+```
+from litex.soc.integration.common import get_mem_data
+
+def convert_bios(bin_path, init_path):
+    # Convert binary → list of words
+    data = get_mem_data(bin_path, endianness="little", data_width=32 )
+
+    # Write mem.init
+    with open(init_path, "w") as f:
+        f.write("@00000000\n")
+        for word in data:
+            f.write(f"{word:08x}\n")
+
+    print(f"Generated {init_path}")
+
+convert_bios("demo.bin", "rom.init")
+```
+
+/home/paul/my_litex/litex/litex/soc/software/demo/demo.bin   
+/home/paul/my_litex/litex-boards/litex_boards/targets/build/digilent_nexys4ddr/gateware/digilent_nexys4ddr_rom.init     
+
+
+## Write to flash
+
+```
+   openFPGALoader -b nexys_a7_100 --write-flash --enable-quad digilent_nexys4ddr.bit
+```
+
+setup.sh   
+```
+   source /home/paul/venv/bin/activate
+   source /opt/Xilinx/Vivado/2018.2/settings64.sh
+```
+
+```
+   source setup.sh
+
+   cd ~/my_litex/litex-boards/litex_boards/targets
+   ./digilent_nexys4ddr.py --build 
+
+   cd ~/my_litex/litex-boards/litex_boards/targets/build/digilent_nexys4ddr/gateware
+   openFPGALoader -b nexys_a7_100 --write-flash --enable-quad digilent_nexys4ddr.bit
+
+   litex_term /dev/ttyUSB1
+```
+
+## Faster write 
+
+In Vivado   
+
+If running Vivado in Windows, get all the project files available in one folder.   
+Get all the gateware files from   
+   ~/my_litex/litex-boards/litex_boards/targets/build/digilent_nexys4ddr/gateware   
+And the VexRiscv.v from   
+   ~/my_litex/pythondata-cpu-vexriscv/pythondata_cpu_vexriscv/verilog   
+And amend the location of VexRiscv.v in the digilent_nexys4ddr.xpr project.   
+
+In Hardware Manager, Add configuration device: s25fl128sxxxxxx0-spi-x1_x2_x4    
+
+In Settings: Bitsream set -bin_file   
+
+Open Implemented Design (to get additional bitsream settings)   
+In Settings, Bitstream, Configure additional bitstream settings   
+General: Enable Bitstream Compression: True   
+Configuration: SPI Configuration: Bus Width: 4   
+Configuration modes: Master SPI x4   
+Configuration: Configuration Setup: Configuration Rate (MHz): 33   
+
+Or add this to the .xdc file   
+
+```
+set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
+set_property CONFIG_MODE SPIx4 [current_design]
+set_property BITSTREAM.CONFIG.SPI_BUSWIDTH 4 [current_design]
+set_property BITSTREAM.CONFIG.CONFIGRATE 33 [current_design]
+```
+
+
+```
+set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
+# Compresses the bitstream data to reduce the file size and speed up the programming process.
+
+set_property CONFIG_MODE SPIx4 [current_design]
+# Sets the configuration mode to Quad SPI, instructing the FPGA to expect data across four data lines during boot.
+
+set_property BITSTREAM.CONFIG.SPI_BUSWIDTH 4 [current_design]
+# Enables the four-bit data bus for SPI communication, allowing the FPGA to read four bits per clock cycle instead of one.
+
+set_property BITSTREAM.CONFIG.CONFIGRATE 33 [current_design]
+# Sets the internal clock frequency (in MHz) used by the FPGA to drive the flash memory during configuration.
+```
 
 
 
