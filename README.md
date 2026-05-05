@@ -1,7 +1,14 @@
 # Litex-install-Ubuntu-25.10-and-Vivado-2018.2
-Installation instructions to install Litex SOC builder on Ubuntu 25.10 and Vivado 2018.2
 
-Useful links     
+Installation instructions to install Litex SOC builder on Ubuntu 25.10 and Vivado 2018.2    
+
+## Why?   
+
+I wanted to get a stable virtual environment to act as a base for Litex work.   
+Using Virtualbox meant it could be run from Windows when needed.   
+
+## Useful links   
+
 https://www.controlpaths.com/2022/01/17/building-soc-litex/   
 https://github.com/enjoy-digital/litex/tree/master  
 https://github.com/enjoy-digital/litex/tree/master/litex/soc/software/demo   
