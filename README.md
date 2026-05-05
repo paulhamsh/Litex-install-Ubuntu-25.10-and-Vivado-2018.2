@@ -55,8 +55,9 @@ Insert Guest Additions CD image...
 Set shared folders in ```d:\VirtualBoxShare``` mounted to ```/mnt/VirtBoxShare```   
 
 ## Vivado 2018.2 install    
-Download 2018.2 from AMD website – Vivado Design Suite – HLx Editions – 2018.2 Full Product Installation    
-Xilinx_Vivado_SDK_2018.2_0614_1954.tar.gz (17.11 GB)    
+Download 2018.2 from AMD website – ```Vivado Design Suite – HLx Editions – 2018.2 Full Product Installation```  
+
+```Xilinx_Vivado_SDK_2018.2_0614_1954.tar.gz (17.11 GB) ```
 
 Copy the downloaded Xilinx install to /mnt/VirtBox/Installs    
 Ensure we do a symbolic link for the two missing libraries    
