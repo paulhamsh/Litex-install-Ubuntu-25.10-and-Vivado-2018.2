@@ -52,7 +52,7 @@ Insert Guest Additions CD image...
   ./VBoxLinuxAdditions.run.
 ```
 
-Set shared folders in d:\VirtualBoxShare mounted to /mnt/VirtBoxShare    
+Set shared folders in ```d:\VirtualBoxShare``` mounted to ```/mnt/VirtBoxShare```   
 
 ## Vivado 2018.2 install    
 Download 2018.2 from AMD website – Vivado Design Suite – HLx Editions – 2018.2 Full Product Installation    
