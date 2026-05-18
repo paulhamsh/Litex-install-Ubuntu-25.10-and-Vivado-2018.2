@@ -2,6 +2,10 @@
 
 Installation instructions to install Litex SOC builder on Ubuntu 25.10 and Vivado 2018.2    
 
+<p align="center">
+  <img src="logo/svg" width="350">
+</p>
+
 ## Why?   
 
 I wanted to get a stable virtual environment to act as a base for Litex work.   
